@@ -31,8 +31,8 @@
                     <children>
                         <Label text="Samochód" />
                         <ComboBox fx:id="carComboBox" prefWidth="150.0" promptText="Wybierz Samochód" />
-                        <Button fx:id="addCarButton" mnemonicParsing="false" text="Dodaj nowy" />
-                        <Button fx:id="removeCarButton" mnemonicParsing="false" text="Usuń" />
+                        <Button fx:id="addCarButton" mnemonicParsing="false" text="Dodaj nowy" onAction="#onAddCarButton"/>
+                        <Button fx:id="removeCarButton" mnemonicParsing="false" text="Usuń" onAction="#onRemoveCarButton"/>
                     </children>
                     <padding>
                         <Insets left="10.0" />
@@ -65,9 +65,9 @@
                                         <TextField fx:id="speedTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                                             <children>
-                                                <Button fx:id="startButton" mnemonicParsing="false" prefWidth="50.0" text="Włącz" />
-                                                <Button fx:id="stopButton" mnemonicParsing="false" prefWidth="50.0" text="Wyłącz" />
-                                                <Button fx:id="genericButton" mnemonicParsing="false" text="Button" />
+                                                <Button fx:id="startButton" mnemonicParsing="false" prefWidth="50.0" text="Włącz" onAction="#onStartButton"/>
+                                                <Button fx:id="stopButton" mnemonicParsing="false" prefWidth="50.0" text="Wyłącz" onAction="#onStopButton"/>
+                                                <Button fx:id="genericButton" mnemonicParsing="false" text="Button" onAction="#onGenericButton"/>
                                             </children>
                                         </HBox>
                                     </children>
@@ -95,8 +95,8 @@
                                         <TextField fx:id="gearboxGearTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                             <children>
-                                                <Button fx:id="increaseGearButton" mnemonicParsing="false" prefWidth="90.0" text="Zwiększ bieg" />
-                                                <Button fx:id="decreaseGearButton" mnemonicParsing="false" prefWidth="90.0" text="Zmniejsz bieg" />
+                                                <Button fx:id="increaseGearButton" mnemonicParsing="false" prefWidth="90.0" text="Zwiększ bieg" onAction="#onIncreaseGearButton"/>
+                                                <Button fx:id="decreaseGearButton" mnemonicParsing="false" prefWidth="90.0" text="Zmniejsz bieg" onAction="#onDecreaseGearButton"/>
                                             </children>
                                         </HBox>
                                     </children>
@@ -124,8 +124,8 @@
                                         <TextField fx:id="engineRPMTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                             <children>
-                                                <Button fx:id="addGasButton" mnemonicParsing="false" prefWidth="90.0" text="Dodaj gazu" />
-                                                <Button fx:id="reduceGasButton" mnemonicParsing="false" prefWidth="90.0" text="Ujmij gazu" />
+                                                <Button fx:id="addGasButton" mnemonicParsing="false" prefWidth="90.0" text="Dodaj gazu" onAction="#onAddGasButton"/>
+                                                <Button fx:id="reduceGasButton" mnemonicParsing="false" prefWidth="90.0" text="Ujmij gazu" onAction="#onReduceGasButton"/>
                                             </children>
                                         </HBox>
                                     </children>
@@ -153,8 +153,8 @@
                                         <TextField fx:id="clutchStateTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                             <children>
-                                                <Button fx:id="pressClutchButton" mnemonicParsing="false" prefWidth="90.0" text="Naciśnij" />
-                                                <Button fx:id="releaseClutchButton" mnemonicParsing="false" prefWidth="90.0" text="Zwolnij" />
+                                                <Button fx:id="pressClutchButton" mnemonicParsing="false" prefWidth="90.0" text="Naciśnij" onAction="#onPressClutchButton"/>
+                                                <Button fx:id="releaseClutchButton" mnemonicParsing="false" prefWidth="90.0" text="Zwolnij" onAction="#onReleaseClutchButton"/>
                                             </children>
                                         </HBox>
                                     </children>
