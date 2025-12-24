@@ -1,4 +1,4 @@
-package Symulator;
+package com.example.samochodgui;
 
 public class Samochod {
     private Silnik silnik;

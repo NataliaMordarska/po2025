@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.samochodgui.HelloController">
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu text="Plik">
+                    <MenuItem text="Zamknij"/>
+                </Menu>
+                <Menu text="Edycja"/>
+            </MenuBar>
+            <ToolBar>
+                <Label text="Samochód:"/>
+                <ComboBox fx:id="carCombo" prefWidth="150.0"/>
+                <Button text="Dodaj nowy"/>
+                <Button text="Usuń"/>
+            </ToolBar>
+        </VBox>
+    </top>
+
+    <left>
+        <ScrollPane prefWidth="250">
+            <VBox spacing="10">
+                <TitledPane text="Samochód">
+                    <VBox spacing="5">
+                        <TextField fx:id="modelField" promptText="Model"/>
+                        <TextField fx:id="nrRejField" promptText="Nr rejestracyjny"/>
+                        <TextField fx:id="wagaField" promptText="Waga"/>
+                        <TextField fx:id="predkoscField" promptText="Prędkość"/>
+                        <HBox spacing="5">
+                            <Button text="Włącz" onAction="#onUruchomClick"/>
+                            <Button text="Wyłącz" onAction="#onWylaczClick"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+
+                <TitledPane text="Skrzynia Biegów">
+                    <VBox spacing="5">
+                        <TextField promptText="Nazwa"/>
+                        <TextField promptText="Cena"/>
+                        <TextField promptText="Waga"/>
+                        <TextField fx:id="biegField" promptText="Bieg"/>
+                        <HBox spacing="5">
+                            <Button text="Zwiększ bieg" onAction="#onBiegGoraClick"/>
+                            <Button text="Zmniejsz bieg" onAction="#onBiegDolClick"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+
+                <TitledPane text="Silnik">
+                    <VBox spacing="5">
+                        <TextField promptText="Nazwa"/>
+                        <TextField promptText="Cena"/>
+                        <TextField promptText="Waga"/>
+                        <TextField fx:id="obrotyField" promptText="Obroty"/>
+                        <HBox spacing="5">
+                            <Button text="Dodaj gazu" onAction="#onGazClick"/>
+                            <Button text="Ujmij gazu" onAction="#onUjmijGazClick"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+
+                <TitledPane text="Sprzęgło">
+                    <VBox spacing="5">
+                        <TextField promptText="Nazwa"/>
+                        <TextField promptText="Cena"/>
+                        <TextField promptText="Waga"/>
+                        <TextField fx:id="sprzegloField" promptText="Stan"/>
+                        <HBox spacing="5">
+                            <Button text="Naciśnij" onAction="#onSprzegloNacisnijClick"/>
+                            <Button text="Zwolnij" onAction="#onSprzegloZwolnijClick"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+            </VBox>
+        </ScrollPane>
+    </left>
+
+    <center>
+        <Pane style="-fx-background-color: #90ee90;">
+            <children>
+                <Label layoutX="14.0" layoutY="14.0" text="Mapa" />
+                <ImageView fx:id="carImage" fitHeight="60.0" fitWidth="100.0" layoutX="50.0" layoutY="50.0">
+                    <image>
+                        <Image url="@car.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="50.0" layoutY="115.0" text="Car" />
+            </children>
+        </Pane>
+    </center>
+</BorderPane>
