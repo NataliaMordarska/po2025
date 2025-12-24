@@ -13,27 +13,18 @@ public class Samochod {
         this.pozycja = pozycja;
     }
 
-    public void wlacz() {
-        silnik.uruchom();
+    public double getWaga() {
+        return silnik.getWaga() + skrzynia.getWaga() + sprzeglo.getWaga();
     }
 
-    public void wylacz() {
-        silnik.zatrzymaj();
+    public double getPredkosc() {
+        if (silnik.getAktualneObroty() > 0 && !sprzeglo.isNacisniete()) {
+            return (silnik.getAktualneObroty() * skrzynia.getAktualnyBieg()) / 100.0;
+        }
+        return 0;
     }
 
-    public Silnik getSilnik() {
-        return silnik;
-    }
-
-    public Skrzyniabiegow getSkrzynia() {
-        return skrzynia;
-    }
-
-    public Sprzeglo getSprzeglo() {
-        return sprzeglo;
-    }
-
-    public Pozycja getPozycja() {
-        return pozycja;
-    }
+    public Silnik getSilnik() { return silnik; }
+    public Skrzyniabiegow getSkrzynia() { return skrzynia; }
+    public Sprzeglo getSprzeglo() { return sprzeglo; }
 }

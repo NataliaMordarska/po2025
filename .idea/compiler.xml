@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="symulator" />
         <module name="Gui" />
+        <module name="SamochodGUI" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="symulator" target="20" />
       <module name="symulator2" target="20" />
     </bytecodeTargetLevel>
   </component>
