@@ -2,7 +2,8 @@ module org.example.gui {
     requires javafx.controls;
     requires javafx.fxml;
 
+    opens org.example.gui.samochodgui to javafx.fxml;
 
-    opens org.example.gui to javafx.fxml;
-    exports org.example.gui;
+    exports org.example.gui.samochod;
+    exports org.example.gui.samochodgui;
 }
