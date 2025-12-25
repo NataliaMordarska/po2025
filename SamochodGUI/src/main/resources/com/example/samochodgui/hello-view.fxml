@@ -22,6 +22,7 @@
                         <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2">
                             <Button text="Włącz" onAction="#onUruchomClick"/>
                             <Button text="Wyłącz" onAction="#onWylaczClick"/>
+                            <Button text="Dodaj Nowy" onAction="#onDodajAutoClick"/>
                         </HBox>
                     </GridPane>
                 </TitledPane>

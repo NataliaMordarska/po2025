@@ -1,9 +1,14 @@
 package com.example.samochodgui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class HelloController {
     @FXML private TextField modelTextField, nrRejTextField, wagaTextField, predkoscTextField;
@@ -13,64 +18,82 @@ public class HelloController {
     @FXML private ImageView carImage;
     @FXML private ComboBox<String> carComboBox;
 
-    private Samochod auto = new Samochod(
+    private static Samochod auto = new Samochod(
             new Silnik("Bosch", "V8", 5000.0, 200.0, 6000),
             new Skrzyniabiegow("ZF", "Manual", 2500.0, 60.0, 6),
             new Sprzeglo("Sachs", "Sport", 1000.0, 15.0),
-            new Pozycja(50, 50)
+            new Pozycja(0, 0)
     );
 
     @FXML
     public void initialize() {
+        try {
+            Image carImg = new Image(getClass().getResource("/com/example/samochodgui/car.png").toExternalForm());
+            carImage.setImage(carImg);
+            carImage.setFitWidth(30);
+            carImage.setFitHeight(20);
+        } catch (Exception e) {
+            System.out.println("Blad obrazka: " + e.getMessage());
+        }
+
         carComboBox.getItems().addAll("Audi A4", "BMW M3", "Tesla Model S");
         carComboBox.getSelectionModel().selectFirst();
-        aktualizujInterfejs();
+        refresh();
+    }
+
+    public void addCarToList(String model, String registration, double weight, int speed) {
+        System.out.println("Dodano samochód: " + model + ", rej: " + registration + ", waga: " + weight + ", speed: " + speed);
+        carComboBox.getItems().add(model + " (" + registration + ")");
+        carComboBox.getSelectionModel().selectLast();
     }
 
     @FXML
-    public void onCarSelected() {
-        aktualizujInterfejs();
+    public void onDodajAutoClick() {
+        try {
+            openAddCarWindow();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @FXML public void onUruchomClick() { auto.getSilnik().uruchom(); aktualizujInterfejs(); }
-    @FXML public void onWylaczClick() { auto.getSilnik().zatrzymaj(); aktualizujInterfejs(); }
+    public void openAddCarWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DodajSamochod.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
 
+        DodajSamochodController controller = loader.getController();
+        controller.setParentController(this);
+
+        stage.setTitle("Dodaj nowy samochód");
+        stage.show();
+    }
+
+    @FXML public void onUruchomClick() { auto.getSilnik().uruchom(); refresh(); }
+    @FXML public void onWylaczClick() { auto.getSilnik().zatrzymaj(); refresh(); }
     @FXML public void onGazClick() {
         auto.getSilnik().zwiekszObroty();
         carImage.setLayoutX(carImage.getLayoutX() + 10);
-        aktualizujInterfejs();
+        refresh();
     }
-
     @FXML public void onUjmijGazClick() {
         auto.getSilnik().zmniejszObroty();
         carImage.setLayoutX(carImage.getLayoutX() - 10);
-        aktualizujInterfejs();
+        refresh();
     }
+    @FXML public void onBiegGoraClick() { auto.getSkrzynia().zwiekszBieg(); refresh(); }
+    @FXML public void onBiegDolClick() { auto.getSkrzynia().zmniejszBieg(); refresh(); }
+    @FXML public void onSprzegloNacisnijClick() { auto.getSprzeglo().nacisnij(); refresh(); }
+    @FXML public void onSprzegloZwolnijClick() { auto.getSprzeglo().zwolnij(); refresh(); }
+    @FXML public void onCarSelected() { refresh(); }
 
-    @FXML public void onBiegGoraClick() { auto.getSkrzynia().zwiekszBieg(); aktualizujInterfejs(); }
-    @FXML public void onBiegDolClick() { auto.getSkrzynia().zmniejszBieg(); aktualizujInterfejs(); }
-    @FXML public void onSprzegloNacisnijClick() { auto.getSprzeglo().nacisnij(); aktualizujInterfejs(); }
-    @FXML public void onSprzegloZwolnijClick() { auto.getSprzeglo().zwolnij(); aktualizujInterfejs(); }
-
-    private void aktualizujInterfejs() {
-        modelTextField.setText(auto.getSilnik().getModel());
+    private void refresh() {
+        wagaTextField.setText(String.valueOf(auto.getWaga()));
         nrRejTextField.setText("KR 12345");
-        wagaTextField.setText(auto.getWaga() + " kg");
-        predkoscTextField.setText(auto.getPredkosc() + " km/h");
-
+        predkoscTextField.setText(String.valueOf(auto.getPredkosc()));
+        modelTextField.setText(auto.getSilnik().getModel());
         sNazwaTextField.setText(auto.getSkrzynia().getModel());
-        sCenaTextField.setText(auto.getSkrzynia().getCena() + " zł");
-        sWagaTextField.setText(auto.getSkrzynia().getWaga() + " kg");
         sBiegTextField.setText(String.valueOf(auto.getSkrzynia().getAktualnyBieg()));
-
-        silNazwaTextField.setText(auto.getSilnik().getModel());
-        silCenaTextField.setText(auto.getSilnik().getCena() + " zł");
-        silWagaTextField.setText(auto.getSilnik().getWaga() + " kg");
         silObrotyTextField.setText(String.valueOf(auto.getSilnik().getAktualneObroty()));
-
-        sprNazwaTextField.setText(auto.getSprzeglo().getModel());
-        sprCenaTextField.setText(auto.getSprzeglo().getCena() + " zł");
-        sprWagaTextField.setText(auto.getSprzeglo().getWaga() + " kg");
         sprStanTextField.setText(auto.getSprzeglo().isNacisniete() ? "Wciśnięte" : "Zwolnione");
     }
 }
