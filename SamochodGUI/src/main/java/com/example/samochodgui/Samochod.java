@@ -1,5 +1,8 @@
 package com.example.samochodgui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Samochod extends Thread {
     private Silnik silnik;
     private Skrzyniabiegow skrzynia;
@@ -7,6 +10,7 @@ public class Samochod extends Thread {
     private Pozycja pozycja;
     private Pozycja cel;
     private String nazwa;
+    private List<Listener> listeners = new ArrayList<>();
 
     public Samochod(Silnik silnik, Skrzyniabiegow skrzynia, Sprzeglo sprzeglo, Pozycja pozycja, String nazwa) {
         this.silnik = silnik;
@@ -15,6 +19,20 @@ public class Samochod extends Thread {
         this.pozycja = pozycja;
         this.nazwa = nazwa;
         this.start();
+    }
+
+    public void addListener(Listener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(Listener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyListeners() {
+        for (Listener listener : listeners) {
+            listener.update();
+        }
     }
 
     public void jedzDo(Pozycja nowaPozycja) {
@@ -27,19 +45,19 @@ public class Samochod extends Thread {
         while (true) {
             try {
                 if (cel != null) {
-                    // Obliczanie odległości do celu
                     double odleglosc = Math.sqrt(Math.pow(cel.x - pozycja.x, 2) + Math.pow(cel.y - pozycja.y, 2));
 
-                    // Sprawdzanie: jeśli jesteśmy daleko, jedź dalej
                     if (odleglosc > 1) {
                         double dx = getPredkosc() * deltat * (cel.x - pozycja.x) / odleglosc;
                         double dy = getPredkosc() * deltat * (cel.y - pozycja.y) / odleglosc;
 
                         pozycja.x += dx;
                         pozycja.y += dy;
+
+                        notifyListeners();
                     } else {
-                        // Sprawdzanie: jeśli dojechaliśmy (odległość <= 1), zatrzymaj logikę ruchu
                         cel = null;
+                        notifyListeners();
                     }
                 }
                 Thread.sleep(100);
@@ -59,7 +77,6 @@ public class Samochod extends Thread {
     }
 
     public double getPredkosc() {
-        // Logika obliczania prędkości na podstawie obrotów i biegu
         if (silnik.getAktualneObroty() > 0 && !sprzeglo.isNacisniete()) {
             return (silnik.getAktualneObroty() * skrzynia.getAktualnyBieg()) / 100.0;
         }
