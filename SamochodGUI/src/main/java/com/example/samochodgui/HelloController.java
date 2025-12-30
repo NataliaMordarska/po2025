@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
@@ -40,15 +41,15 @@ public class HelloController {
         samochodComboBox.setItems(samochody);
         samochodComboBox.setOnAction(event -> {
             samochod = samochodComboBox.getSelectionModel().getSelectedItem();
-            refresh();
+            if (samochod != null) {
+                carImage.setVisible(true);
+                refresh();
+            }
         });
 
         mapa.setOnMouseClicked(event -> {
             if (samochod != null) {
-                double x = event.getX();
-                double y = event.getY();
-                Pozycja nowaPozycja = new Pozycja(x, y);
-                samochod.jedzDo(nowaPozycja);
+                samochod.jedzDo(new Pozycja(event.getX(), event.getY()));
             }
         });
 
@@ -59,19 +60,29 @@ public class HelloController {
             }
         }.start();
 
-        // Startowe auto dodane nową metodą
-        Samochod startowy = new Samochod(
+        // Dodanie auta startowego
+        dodajSamochod(new Samochod(
                 new Silnik("Bosch", "V8", 5000.0, 200.0, 6000),
                 new Skrzyniabiegow("ZF", "Manual", 2500.0, 60.0, 6),
                 new Sprzeglo("Sachs", "Sport", 1000.0, 15.0),
                 new Pozycja(0, 0),
                 "Auto Startowe"
-        );
-        dodajSamochod(startowy);
+        ));
     }
 
     /**
-     * Metoda zgodna z poleceniem z obrazka
+     * Wyświetlanie komunikatów o błędach zgodnie z instrukcją
+     */
+    public void pokazBlad(String wiadomosc) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Błąd");
+        alert.setHeaderText(null);
+        alert.setContentText(wiadomosc);
+        alert.showAndWait();
+    }
+
+    /**
+     * Publiczna metoda dodająca samochód i ustawiająca go w ComboBox
      */
     public void dodajSamochod(Samochod nowySamochod) {
         samochody.add(nowySamochod);
@@ -87,7 +98,7 @@ public class HelloController {
             samochody.remove(samochod);
             if (samochody.isEmpty()) {
                 samochod = null;
-                wyczyscPola(); // Rozwiązuje problem z image_14d669.png
+                wyczyscPola(); // Rozwiązanie problemu widocznego na obrazku
                 carImage.setVisible(false);
             } else {
                 samochodComboBox.getSelectionModel().selectFirst();
@@ -96,9 +107,6 @@ public class HelloController {
         }
     }
 
-    /**
-     * Metoda czyszcząca pola, gdy nie ma żadnego samochodu
-     */
     private void wyczyscPola() {
         TextField[] wszystkiePola = {
                 modelTextField, nrRejTextField, wagaTextField, predkoscTextField,
@@ -116,15 +124,16 @@ public class HelloController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DodajSamochod.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
-        DodajSamochodController controller = loader.getController();
 
-        // Ustawienie asocjacji do głównego kontrolera
+        DodajSamochodController controller = loader.getController();
+        // Przekazanie asocjacji do głównego kontrolera
         controller.setParentController(this);
 
         stage.setTitle("Dodaj nowy samochód");
         stage.show();
     }
 
+    // Przycisk sterowania - dodano zabezpieczenie przed null
     @FXML public void onUruchomClick() { if (samochod != null) samochod.getSilnik().uruchom(); }
     @FXML public void onWylaczClick() { if (samochod != null) samochod.getSilnik().zatrzymaj(); }
     @FXML public void onGazClick() { if (samochod != null) samochod.getSilnik().zwiekszObroty(); }
