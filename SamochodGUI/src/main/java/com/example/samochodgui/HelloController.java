@@ -46,6 +46,9 @@ public class HelloController implements Listener {
             if (samochod != null) {
                 carImage.setVisible(true);
                 refresh();
+            } else {
+                wyczyscPola();
+                carImage.setVisible(false);
             }
             if (usunButton != null) {
                 usunButton.setDisable(newVal == null);
@@ -63,7 +66,7 @@ public class HelloController implements Listener {
                 new Skrzyniabiegow("ZF", "Manual", 2500.0, 60.0, 6),
                 new Sprzeglo("Sachs", "Sport", 1000.0, 15.0),
                 new Pozycja(0, 0),
-                "Auto Startowe"
+                "Auto Startowe [WA12345]"
         ));
     }
 
@@ -100,8 +103,6 @@ public class HelloController implements Listener {
                 carImage.setVisible(false);
             } else {
                 samochodComboBox.getSelectionModel().selectFirst();
-                samochod = samochodComboBox.getSelectionModel().getSelectedItem();
-                refresh();
             }
         }
     }
@@ -210,9 +211,19 @@ public class HelloController implements Listener {
         if (samochod == null) return;
 
         Platform.runLater(() -> {
-            wagaTextField.setText(String.valueOf(samochod.getWaga()));
+            wagaTextField.setText(String.format("%.1f", samochod.getWaga()));
             predkoscTextField.setText(String.format("%.2f", samochod.getPredkosc()));
             modelTextField.setText(samochod.getSilnik().getModel());
+
+            // Rozwiązanie problemu nr rejestracyjnego - wyciągamy tekst z nawiasów [ ]
+            String pelnaNazwa = samochod.getNazwa();
+            if (pelnaNazwa.contains("[") && pelnaNazwa.contains("]")) {
+                String nr = pelnaNazwa.substring(pelnaNazwa.indexOf("[") + 1, pelnaNazwa.indexOf("]"));
+                nrRejTextField.setText(nr);
+            } else {
+                nrRejTextField.setText("Brak");
+            }
+
             sNazwaTextField.setText(samochod.getSkrzynia().getModel());
             sBiegTextField.setText(String.valueOf(samochod.getSkrzynia().getAktualnyBieg()));
             silObrotyTextField.setText(String.valueOf(samochod.getSilnik().getAktualneObroty()));
