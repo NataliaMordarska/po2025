@@ -1,8 +1,8 @@
 package com.example.samochodgui;
 
 public class Pozycja {
-    private double x;
-    private double y;
+    public double x;
+    public double y;
 
     public Pozycja(double x, double y) {
         this.x = x;
@@ -16,5 +16,21 @@ public class Pozycja {
 
     public String getPozycja() {
         return "x: " + x + ", y: " + y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }

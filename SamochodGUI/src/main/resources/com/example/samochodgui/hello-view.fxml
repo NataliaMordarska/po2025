@@ -7,7 +7,7 @@
     <left>
         <ScrollPane prefWidth="320">
             <VBox spacing="10" style="-fx-padding: 10;">
-                <ComboBox fx:id="carComboBox" onAction="#onCarSelected" prefWidth="300.0" promptText="Wybierz samochód" />
+                <ComboBox fx:id="samochodComboBox" prefWidth="300.0" promptText="Wybierz samochód" />
 
                 <TitledPane text="Samochód">
                     <GridPane hgap="10" vgap="5">
@@ -22,7 +22,10 @@
                         <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2">
                             <Button text="Włącz" onAction="#onUruchomClick"/>
                             <Button text="Wyłącz" onAction="#onWylaczClick"/>
+                        </HBox>
+                        <HBox spacing="10" GridPane.rowIndex="5" GridPane.columnSpan="2">
                             <Button text="Dodaj Nowy" onAction="#onDodajAutoClick"/>
+                            <Button text="Usuń" onAction="#onUsunSamochod"/>
                         </HBox>
                     </GridPane>
                 </TitledPane>
@@ -81,10 +84,8 @@
         </ScrollPane>
     </left>
     <center>
-        <Pane style="-fx-background-color: #90ee90;">
-            <ImageView fx:id="carImage" fitHeight="60.0" fitWidth="100.0" layoutX="50.0" layoutY="50.0">
-                <Image url="@car.png" />
-            </ImageView>
+        <Pane fx:id="mapa" style="-fx-background-color: #90ee90;">
+            <ImageView fx:id="carImage" fitHeight="60.0" fitWidth="100.0" layoutX="0.0" layoutY="0.0" />
         </Pane>
     </center>
 </BorderPane>
