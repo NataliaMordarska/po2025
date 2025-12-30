@@ -2,30 +2,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.samochodgui.HelloController">
-    <left>
-        <ScrollPane prefWidth="320">
-            <VBox spacing="10" style="-fx-padding: 10;">
-                <ComboBox fx:id="samochodComboBox" prefWidth="300.0" promptText="Wybierz samochód" />
+    <top>
+        <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-background-color: #f4f4f4; -fx-padding: 10;">
+            <Label text="Samochód:"/>
+            <ComboBox fx:id="samochodComboBox" prefWidth="250.0" promptText="Wybierz samochód" />
+            <Button text="Dodaj nowy" onAction="#onDodajAutoClick"/>
+            <Button fx:id="usunButton" text="Usuń" onAction="#onUsunSamochod"/>
+        </HBox>
+    </top>
 
+    <left>
+        <ScrollPane prefWidth="320" fitToWidth="true">
+            <VBox spacing="10" style="-fx-padding: 10;">
                 <TitledPane text="Samochód">
                     <GridPane hgap="10" vgap="5">
                         <Label text="Model" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="modelTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <TextField fx:id="modelTextField" GridPane.rowIndex="0" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Nr rej." GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="nrRejTextField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="nrRejTextField" GridPane.rowIndex="1" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Waga" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="wagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <TextField fx:id="wagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Prędkość" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="predkoscTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <TextField fx:id="predkoscTextField" GridPane.rowIndex="3" GridPane.columnIndex="1" editable="false"/>
                         <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2">
-                            <Button text="Włącz" onAction="#onUruchomClick"/>
-                            <Button text="Wyłącz" onAction="#onWylaczClick"/>
-                        </HBox>
-                        <HBox spacing="10" GridPane.rowIndex="5" GridPane.columnSpan="2">
-                            <Button text="Dodaj Nowy" onAction="#onDodajAutoClick"/>
-                            <Button text="Usuń" onAction="#onUsunSamochod"/>
+                            <Button text="Włącz" onAction="#onUruchomClick" prefWidth="80"/>
+                            <Button text="Wyłącz" onAction="#onWylaczClick" prefWidth="80"/>
                         </HBox>
                     </GridPane>
                 </TitledPane>
@@ -33,13 +37,13 @@
                 <TitledPane text="Skrzynia Biegów">
                     <GridPane hgap="10" vgap="5">
                         <Label text="Nazwa" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sNazwaTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sNazwaTextField" GridPane.rowIndex="0" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Cena" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sCenaTextField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sCenaTextField" GridPane.rowIndex="1" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Waga" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sWagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sWagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Bieg" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sBiegTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sBiegTextField" GridPane.rowIndex="3" GridPane.columnIndex="1" editable="false"/>
                         <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2">
                             <Button text="Zwiększ bieg" onAction="#onBiegGoraClick"/>
                             <Button text="Zmniejsz bieg" onAction="#onBiegDolClick"/>
@@ -50,13 +54,13 @@
                 <TitledPane text="Silnik">
                     <GridPane hgap="10" vgap="5">
                         <Label text="Nazwa" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="silNazwaTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <TextField fx:id="silNazwaTextField" GridPane.rowIndex="0" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Cena" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="silCenaTextField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="silCenaTextField" GridPane.rowIndex="1" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Waga" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="silWagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <TextField fx:id="silWagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Obroty" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="silObrotyTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <TextField fx:id="silObrotyTextField" GridPane.rowIndex="3" GridPane.columnIndex="1" editable="false"/>
                         <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2">
                             <Button text="Dodaj gazu" onAction="#onGazClick"/>
                             <Button text="Ujmij gazu" onAction="#onUjmijGazClick"/>
@@ -67,13 +71,13 @@
                 <TitledPane text="Sprzęgło">
                     <GridPane hgap="10" vgap="5">
                         <Label text="Nazwa" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sprNazwaTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sprNazwaTextField" GridPane.rowIndex="0" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Cena" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sprCenaTextField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sprCenaTextField" GridPane.rowIndex="1" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Waga" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sprWagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sprWagaTextField" GridPane.rowIndex="2" GridPane.columnIndex="1" editable="false"/>
                         <Label text="Stan" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="sprStanTextField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <TextField fx:id="sprStanTextField" GridPane.rowIndex="3" GridPane.columnIndex="1" editable="false"/>
                         <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2">
                             <Button text="Naciśnij" onAction="#onSprzegloNacisnijClick"/>
                             <Button text="Zwolnij" onAction="#onSprzegloZwolnijClick"/>
@@ -83,6 +87,7 @@
             </VBox>
         </ScrollPane>
     </left>
+
     <center>
         <Pane fx:id="mapa" style="-fx-background-color: #90ee90;">
             <ImageView fx:id="carImage" fitHeight="60.0" fitWidth="100.0" layoutX="0.0" layoutY="0.0" />

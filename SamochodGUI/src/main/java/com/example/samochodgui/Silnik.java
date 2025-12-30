@@ -18,14 +18,18 @@ public class Silnik extends Komponent {
         this.obroty = 0;
     }
 
-    public void zwiekszObroty() {
-        if (this.obroty > 0) {
-            if (this.obroty + 500 <= maxObroty) {
-                this.obroty += 500;
-            } else {
-                this.obroty = maxObroty;
-            }
+    // Zmieniamy na boolean, aby poinformować kontroler, czy dodanie gazu było możliwe
+    public boolean zwiekszObroty() {
+        if (this.obroty == 0) {
+            return false; // Silnik jest wyłączony - operacja nieudana
         }
+
+        if (this.obroty + 500 <= maxObroty) {
+            this.obroty += 500;
+        } else {
+            this.obroty = maxObroty;
+        }
+        return true; // Sukces
     }
 
     public void zmniejszObroty() {
@@ -37,5 +41,9 @@ public class Silnik extends Komponent {
 
     public int getAktualneObroty() {
         return this.obroty;
+    }
+
+    public int getMaxObroty() {
+        return maxObroty;
     }
 }

@@ -18,6 +18,7 @@ public class Samochod extends Thread {
         this.sprzeglo = sprzeglo;
         this.pozycja = pozycja;
         this.nazwa = nazwa;
+        this.setDaemon(true);
         this.start();
     }
 
@@ -30,7 +31,8 @@ public class Samochod extends Thread {
     }
 
     private void notifyListeners() {
-        for (Listener listener : listeners) {
+        List<Listener> copy = new ArrayList<>(listeners);
+        for (Listener listener : copy) {
             listener.update();
         }
     }
@@ -42,34 +44,32 @@ public class Samochod extends Thread {
     @Override
     public void run() {
         double deltat = 0.1;
-        while (true) {
+        while (!isInterrupted()) {
             try {
                 if (cel != null) {
-                    double odleglosc = Math.sqrt(Math.pow(cel.x - pozycja.x, 2) + Math.pow(cel.y - pozycja.y, 2));
+                    double dx_cel = cel.x - pozycja.x;
+                    double dy_cel = cel.y - pozycja.y;
+                    double odleglosc = Math.sqrt(dx_cel * dx_cel + dy_cel * dy_cel);
 
-                    if (odleglosc > 1) {
-                        double dx = getPredkosc() * deltat * (cel.x - pozycja.x) / odleglosc;
-                        double dy = getPredkosc() * deltat * (cel.y - pozycja.y) / odleglosc;
+                    double v = getPredkosc();
+                    double krok = v * deltat;
 
-                        pozycja.x += dx;
-                        pozycja.y += dy;
-
-                        notifyListeners();
-                    } else {
+                    if (odleglosc <= krok || odleglosc < 1.0) {
+                        pozycja.x = cel.x;
+                        pozycja.y = cel.y;
                         cel = null;
-                        notifyListeners();
+                    } else if (v > 0) {
+                        pozycja.x += krok * (dx_cel / odleglosc);
+                        pozycja.y += krok * (dy_cel / odleglosc);
                     }
+
+                    notifyListeners();
                 }
-                Thread.sleep(100);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                break;
             }
         }
-    }
-
-    @Override
-    public String toString() {
-        return nazwa;
     }
 
     public double getWaga() {
@@ -77,10 +77,17 @@ public class Samochod extends Thread {
     }
 
     public double getPredkosc() {
-        if (silnik.getAktualneObroty() > 0 && !sprzeglo.isNacisniete()) {
-            return (silnik.getAktualneObroty() * skrzynia.getAktualnyBieg()) / 100.0;
+        if (silnik.getAktualneObroty() > 0 && !sprzeglo.isNacisniete() && skrzynia.getAktualnyBieg() > 0) {
+            double stosunekObrotow = (double) silnik.getAktualneObroty() / silnik.getMaxObroty();
+            double stosunekBiegow = (double) skrzynia.getAktualnyBieg() / skrzynia.getIloscBiegow();
+            return stosunekObrotow * stosunekBiegow * 200.0;
         }
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return nazwa;
     }
 
     public String getNazwa() { return nazwa; }

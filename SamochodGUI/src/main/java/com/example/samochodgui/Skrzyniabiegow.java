@@ -10,20 +10,35 @@ public class Skrzyniabiegow extends Komponent {
         this.aktualnyBieg = 0;
     }
 
-    public void zwiekszBieg() {
+    // Dodajemy parametr informujący o stanie sprzęgła
+    public String zwiekszBieg(boolean sprzegloWcisniete) {
+        if (!sprzegloWcisniete) {
+            return "BRAK_SPRZEGLA";
+        }
         if (aktualnyBieg < iloscBiegow) {
             this.aktualnyBieg++;
+            return "OK";
         }
+        return "MAX_BIEG";
     }
 
-    public void zmniejszBieg() {
+    public String zmniejszBieg(boolean sprzegloWcisniete) {
+        if (!sprzegloWcisniete) {
+            return "BRAK_SPRZEGLA";
+        }
         if (aktualnyBieg > 0) {
             this.aktualnyBieg--;
+            return "OK";
         }
+        return "MIN_BIEG";
     }
 
     public int getAktualnyBieg() {
         return this.aktualnyBieg;
+    }
+
+    public int getIloscBiegow() {
+        return this.iloscBiegow;
     }
 
     public void zerujBieg() {

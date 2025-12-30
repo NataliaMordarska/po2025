@@ -13,10 +13,8 @@ public class DodajSamochodController {
     @FXML private Button confirmButton;
     @FXML private Button cancelButton;
 
-    // Asocjacja (referencja) do głównego kontrolera
     private HelloController mainController;
 
-    // Metoda ustawiająca referencję (setMainController)
     public void setParentController(HelloController mainController) {
         this.mainController = mainController;
     }
@@ -27,44 +25,53 @@ public class DodajSamochodController {
             String model = modelTextField.getText();
             String registration = registrationTextField.getText();
 
-            // Walidacja czy pola nie są puste
             if (model.isEmpty() || registration.isEmpty()) {
-                throw new Exception("Model i numer rejestracyjny nie mogą być puste!");
-            }
-
-            double weight;
-            try {
-                weight = Double.parseDouble(weightTextField.getText());
-            } catch (NumberFormatException e) {
-                // Wykorzystanie metody pokazBlad z głównego kontrolera
-                if (mainController != null) {
-                    mainController.pokazBlad("Niepoprawny format wagi! Wprowadź liczbę.");
-                }
+                mainController.pokazBlad("Model i numer rejestracyjny nie mogą być puste!");
                 return;
             }
 
-            // Tworzenie obiektu Samochod z początkową pozycją (0, 0)
+            double weight;
+            int maxObroty;
+            try {
+                weight = Double.parseDouble(weightTextField.getText());
+                maxObroty = Integer.parseInt(speedTextField.getText());
+            } catch (NumberFormatException e) {
+                mainController.pokazBlad("Waga i Obroty muszą być liczbami!");
+                return;
+            }
+
+            if (weight <= 0) {
+                mainController.pokazBlad("Waga musi być większa od 0!");
+                return;
+            }
+
+            if (maxObroty < 2000 || maxObroty > 10000) {
+                mainController.pokazBlad("Obroty muszą mieścić się w zakresie 2000 - 10000!");
+                return;
+            }
+
+            Silnik silnik = new Silnik("Producent", "Silnik " + model, 2000.0, weight, maxObroty);
+            Skrzyniabiegow skrzynia = new Skrzyniabiegow("Producent", "Skrzynia", 1500.0, 0, 6);
+            Sprzeglo sprzeglo = new Sprzeglo("Producent", "Sprzeglo", 500.0, 0);
+
             Samochod nowySamochod = new Samochod(
-                    new Silnik("Bosch", model, 2000.0, weight * 0.2, 6000),
-                    new Skrzyniabiegow("ZF", "Manual", 1500.0, weight * 0.1, 6),
-                    new Sprzeglo("Sachs", "Standard", 500.0, 5.0),
+                    silnik,
+                    skrzynia,
+                    sprzeglo,
                     new Pozycja(0, 0),
-                    model + " (" + registration + ")"
+                    model + " [" + registration + "]"
             );
 
-            // Wywołanie publicznej metody dodajSamochod w głównym kontrolerze
             if (mainController != null) {
                 mainController.dodajSamochod(nowySamochod);
             }
 
-            // Zamknięcie okna po sukcesie
             Stage stage = (Stage) confirmButton.getScene().getWindow();
             stage.close();
 
         } catch (Exception e) {
-            // Obsługa pozostałych wyjątków przez okno Alert
             if (mainController != null) {
-                mainController.pokazBlad(e.getMessage());
+                mainController.pokazBlad("Błąd krytyczny: " + e.getMessage());
             }
         }
     }
