@@ -89,7 +89,7 @@
     </left>
 
     <center>
-        <Pane fx:id="mapa" style="-fx-background-color: #90ee90;">
+        <Pane fx:id="mapa" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #333333 0%, #333333 48%, white 48%, white 52%, #333333 52%, #333333 100%);">
             <ImageView fx:id="carImage" fitHeight="60.0" fitWidth="100.0" layoutX="0.0" layoutY="0.0" />
         </Pane>
     </center>

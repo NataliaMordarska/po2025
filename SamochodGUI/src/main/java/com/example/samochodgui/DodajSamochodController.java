@@ -51,8 +51,8 @@ public class DodajSamochodController {
             }
 
             Silnik silnik = new Silnik("Producent", "Silnik " + model, 2000.0, weight, maxObroty);
-            Skrzyniabiegow skrzynia = new Skrzyniabiegow("Producent", "Skrzynia", 1500.0, 0, 6);
-            Sprzeglo sprzeglo = new Sprzeglo("Producent", "Sprzeglo", 500.0, 0);
+            Skrzyniabiegow skrzynia = new Skrzyniabiegow("Producent", "Skrzynia", 1500.0, 15, 6);
+            Sprzeglo sprzeglo = new Sprzeglo("Producent", "Sprzeglo", 500.0, 15);
 
             Samochod nowySamochod = new Samochod(
                     silnik,
@@ -66,10 +66,10 @@ public class DodajSamochodController {
                 mainController.dodajSamochod(nowySamochod);
             }
 
-            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            Stage stage = (Stage) confirmButton.getScene().getWindow();//zamykanie okna
             stage.close();
 
-        } catch (Exception e) {
+        } catch (Exception e) {//blad jakby np pamieci bylo zbyt malo
             if (mainController != null) {
                 mainController.pokazBlad("Błąd krytyczny: " + e.getMessage());
             }

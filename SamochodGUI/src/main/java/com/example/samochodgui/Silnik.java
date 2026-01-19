@@ -4,32 +4,30 @@ public class Silnik extends Komponent {
     private int maxObroty;
     private int obroty;
 
+    // Konstruktor domyślny
+    public Silnik() {
+        super("Producent Silnika", "Model V8", 8000.0, 250.0);
+        this.maxObroty = 7000;
+        this.obroty = 0;
+    }
+
     public Silnik(String producent, String model, double cena, double waga, int maxObroty) {
         super(producent, model, cena, waga);
         this.maxObroty = maxObroty;
         this.obroty = 0;
     }
 
-    public void uruchom() {
-        this.obroty = 800;
-    }
+    public void uruchom() { this.obroty = 800; }
+    public void zatrzymaj() { this.obroty = 0; }
 
-    public void zatrzymaj() {
-        this.obroty = 0;
-    }
-
-    // Zmieniamy na boolean, aby poinformować kontroler, czy dodanie gazu było możliwe
     public boolean zwiekszObroty() {
-        if (this.obroty == 0) {
-            return false; // Silnik jest wyłączony - operacja nieudana
-        }
-
+        if (this.obroty == 0) return false;
         if (this.obroty + 500 <= maxObroty) {
             this.obroty += 500;
         } else {
             this.obroty = maxObroty;
         }
-        return true; // Sukces
+        return true;
     }
 
     public void zmniejszObroty() {
@@ -39,11 +37,6 @@ public class Silnik extends Komponent {
         }
     }
 
-    public int getAktualneObroty() {
-        return this.obroty;
-    }
-
-    public int getMaxObroty() {
-        return maxObroty;
-    }
+    public int getAktualneObroty() { return this.obroty; }
+    public int getMaxObroty() { return maxObroty; }
 }

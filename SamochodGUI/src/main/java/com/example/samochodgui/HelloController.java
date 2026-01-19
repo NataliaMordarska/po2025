@@ -61,10 +61,11 @@ public class HelloController implements Listener {
             }
         });
 
+        // Użycie domyślnych konstruktorów dla komponentów
         dodajSamochod(new Samochod(
-                new Silnik("Bosch", "V8", 5000.0, 200.0, 6000),
-                new Skrzyniabiegow("ZF", "Manual", 2500.0, 60.0, 6),
-                new Sprzeglo("Sachs", "Sport", 1000.0, 15.0),
+                new Silnik(),
+                new Skrzyniabiegow(),
+                new Sprzeglo(),
                 new Pozycja(0, 0),
                 "Auto Startowe [WA12345]"
         ));
@@ -215,7 +216,6 @@ public class HelloController implements Listener {
             predkoscTextField.setText(String.format("%.2f", samochod.getPredkosc()));
             modelTextField.setText(samochod.getSilnik().getModel());
 
-            // Rozwiązanie problemu nr rejestracyjnego - wyciągamy tekst z nawiasów [ ]
             String pelnaNazwa = samochod.getNazwa();
             if (pelnaNazwa.contains("[") && pelnaNazwa.contains("]")) {
                 String nr = pelnaNazwa.substring(pelnaNazwa.indexOf("[") + 1, pelnaNazwa.indexOf("]"));
@@ -224,9 +224,22 @@ public class HelloController implements Listener {
                 nrRejTextField.setText("Brak");
             }
 
+            // Dane Skrzyni
             sNazwaTextField.setText(samochod.getSkrzynia().getModel());
+            sCenaTextField.setText(String.format("%.2f", samochod.getSkrzynia().getCena()));
+            sWagaTextField.setText(String.format("%.2f", samochod.getSkrzynia().getWaga()));
             sBiegTextField.setText(String.valueOf(samochod.getSkrzynia().getAktualnyBieg()));
+
+            // Dane Silnika
+            silNazwaTextField.setText(samochod.getSilnik().getModel());
+            silCenaTextField.setText(String.format("%.2f", samochod.getSilnik().getCena()));
+            silWagaTextField.setText(String.format("%.2f", samochod.getSilnik().getWaga()));
             silObrotyTextField.setText(String.valueOf(samochod.getSilnik().getAktualneObroty()));
+
+            // Dane Sprzęgła
+            sprNazwaTextField.setText(samochod.getSprzeglo().getModel());
+            sprCenaTextField.setText(String.format("%.2f", samochod.getSprzeglo().getCena()));
+            sprWagaTextField.setText(String.format("%.2f", samochod.getSprzeglo().getWaga()));
             sprStanTextField.setText(samochod.getSprzeglo().isNacisniete() ? "Wciśnięte" : "Zwolnione");
 
             carImage.setTranslateX(samochod.getPozycja().getX());
