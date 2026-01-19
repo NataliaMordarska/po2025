@@ -9,17 +9,17 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Model:"/>
-    <TextField fx:id="modelTextField"/>
+    <Label text="Model samochodu:"/>
+    <TextField fx:id="modelTextField" promptText="np. Passat"/>
 
     <Label text="Numer rejestracyjny:"/>
-    <TextField fx:id="registrationTextField"/>
+    <TextField fx:id="registrationTextField" promptText="np. RZ 12345"/>
 
-    <Label text="Waga:"/>
-    <TextField fx:id="weightTextField"/>
+    <Label text="Waga karoserii:"/>
+    <TextField fx:id="weightTextField" promptText="np. 1200"/>
 
-    <Label text="Prędkość maksymalna:"/>
-    <TextField fx:id="speedTextField"/>
+    <Label text="Wybierz silnik (wzorzec):"/>
+    <ComboBox fx:id="enginePatternComboBox" prefWidth="200.0"/>
 
     <HBox spacing="10" alignment="CENTER">
         <Button fx:id="confirmButton" text="Zatwierdź" onAction="#onConfirmButton"/>
